@@ -36,6 +36,7 @@ export default function Grid({product, keyItem, isCart} : GridProps) {
         dispatch({ type: "SET_FAVORITE", value: localCarts });
     }
 
+    //Handling decrease and increase qty not done yet, the render should have used the local state, instead of props
     function handleToAddQty() {
       const getQty = localCarts.filter((obj: any) => obj.id === product.id) as any
       if (getQty.length > 0) {
