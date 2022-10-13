@@ -2,13 +2,17 @@ import { NavLink } from "react-router-dom";
 import * as styled from './styles';
 import Logo from '../../assets/logo.png';
 import { colors } from "../../colors";
-
+import { globalContext } from "./../../store/GlobalStore";
+import { useContext, useEffect } from "react";
 
 type Props = {
   open: boolean;
 }
 
 function RightNav(props: Props) {
+  const { globalState } = useContext(globalContext);
+  let localCarts = globalState.carts as any;
+
   const activeStyle = {
     fontWeight: "bold",
     color: colors.blueActive,
@@ -39,7 +43,10 @@ function RightNav(props: Props) {
                 )
             }
         >
-          <li>Cart</li>
+          <li>
+            Cart &nbsp;
+            {localCarts.length > 0 && <span>{localCarts.length} product added </span>}
+          </li>
         </NavLink>
       </styled.Ul>
     </>

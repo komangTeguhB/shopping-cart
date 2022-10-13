@@ -99,6 +99,11 @@ export const Ul = styled.ul<INav>`
     padding: 18px 10px;
   }
 
+  span {
+    font-size: 14px;
+    font-style: italic;
+  }
+
   @media (max-width: 768px) {
     flex-flow: column nowrap;
     background-color: ${colors.whiteNav};

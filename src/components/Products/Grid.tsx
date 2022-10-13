@@ -1,64 +1,28 @@
-import { useContext, useState } from "react";
 import { StyledGrid } from "./gridStyles";
 import imageBroken from "./../../assets/image_broken.png";
-import { globalContext } from "../../store/GlobalStore";
 
 
 type GridProps = {
     product: any;
     keyItem: any;
     isCart?: boolean;
+    addToCart?: (arg: any) => void;
+    addQty?: (arg: any) => void;
+    removeQty?: (arg: any) => void;
 }
 
-export default function Grid({product, keyItem, isCart} : GridProps) {
-    const { globalState, dispatch } = useContext(globalContext);
-    let localCarts = globalState.carts;
-
+export default function Grid({product, keyItem, isCart, addToCart, addQty, removeQty} : GridProps) {
+   
     function handleAddToCart() {
-        const getQty = localCarts.filter((obj: any) => obj.id === product.id) as any
-        if (getQty.length > 0) {
-          const subtotal = parseInt(getQty[0].itemSubTotal) + parseInt(product.price);
-          getQty[0].qty = getQty[0].qty + 1;
-          getQty[0].itemSubTotal = subtotal.toString();
-          const foundIndex = localCarts.findIndex((obj: any) => obj.id === product.id);
-          localCarts[foundIndex] = getQty[0];
-        } else {
-          const newObj =  {
-            title: product.title,
-            images: product.images,
-            brand: product.brand,
-            id: product.id,
-            qty: 1,
-            itemSubTotal: product.price,
-          };
-          localCarts.push(newObj);
-        }
-        dispatch({ type: "SET_FAVORITE", value: localCarts });
+        addToCart?.(product);
     }
 
-    //Handling decrease and increase qty not done yet, the render should have used the local state, instead of props
     function handleToAddQty() {
-      const getQty = localCarts.filter((obj: any) => obj.id === product.id) as any
-      if (getQty.length > 0) {
-          const subtotal = parseInt(getQty[0].itemSubTotal) + parseInt(product.price);
-          getQty[0].qty = getQty[0].qty + 1;
-          getQty[0].itemSubTotal = subtotal.toString();
-          const foundIndex = localCarts.findIndex((obj: any) => obj.id === product.id);
-          localCarts[foundIndex] = getQty[0];
-      } 
-      dispatch({ type: "SET_FAVORITE", value: localCarts });
+      addQty?.(product);
     }
 
     function handleToRemoveQty() {
-      const getQty = localCarts.filter((obj: any) => obj.id === product.id) as any
-      if (getQty.length > 0) {
-          const subtotal = parseInt(getQty[0].itemSubTotal) - parseInt(product.price);
-          getQty[0].qty = getQty[0].qty - 1;
-          getQty[0].itemSubTotal = subtotal.toString();
-          const foundIndex = localCarts.findIndex((obj: any) => obj.id === product.id);
-          localCarts[foundIndex] = getQty[0];
-      } 
-      dispatch({ type: "SET_FAVORITE", value: localCarts });
+      removeQty?.(product);
     }
 
     return (

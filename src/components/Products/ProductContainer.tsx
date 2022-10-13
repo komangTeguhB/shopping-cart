@@ -1,42 +1,24 @@
 import { StyledProductsContainer } from "./gridStyles";
 import Grid from "./Grid";
 import loadingIndicator from "./../../assets/loading_icon.gif";
-import { useCallback, useEffect, useState } from "react";
 
 type Props = {
     products: any[];
     loading: boolean;
     error?: string;
-    isCart?: boolean
+    isCart?: boolean;
+    addToCart?: (arg: any) => void;
+    addQty?: (arg: any) => void;
+    removeQty?: (arg: any) => void
 }
 
-export default function ProductContainer({products, loading, error, isCart}: Props) {
-    const [total, setTotal] = useState(0);
-
-    const getTotal = useCallback(() =>{
-        let counter = 0;
-        for (let i=0; i < products.length; i++) {
-            console.log(products[i]);
-            if (products[i].itemSubTotal) {
-                counter = counter + parseInt(products[i].itemSubTotal);
-            }
-        }
-        setTotal(counter);
-    },[])
-
-     useEffect(() => {
-        if (isCart) {
-            getTotal()
-        }
-    },[getTotal, isCart])
-
-    
+export default function ProductContainer({products, loading, error, isCart, addToCart, addQty, removeQty}: Props) {   
 
     const renderProductGrid = () => {
         if (!isCart) {
             return products.map((element: any, index: number) => (
                     <div className="grid-item" key={`grid-${element.title}-${index}`}>
-                        <Grid product={element} keyItem={`grid-${element.title}-${index}`} isCart={isCart}></Grid>
+                        <Grid product={element} keyItem={`grid-${element.title}-${index}`} isCart={isCart} addToCart={(product) => addToCart?.(product)}></Grid>
                     </div>
                 ))
         } else {
@@ -48,7 +30,7 @@ export default function ProductContainer({products, loading, error, isCart}: Pro
             },[]);
             return result.map((element: any, index: number) => (
                 <div className="grid-item" key={`grid-${element.title}-${index}`}>
-                    <Grid product={element} keyItem={`grid-${element.title}-${index}`} isCart={isCart}></Grid>
+                    <Grid product={element} keyItem={`grid-${element.title}-${index}`} isCart={isCart} addQty={(product) => addQty?.(product)} removeQty={(product) => removeQty?.(product)}></Grid>
                 </div>
             ))
         }
@@ -75,13 +57,6 @@ export default function ProductContainer({products, loading, error, isCart}: Pro
                     </div>
                    
                 </div>
-                {isCart &&
-                <div className="content-container">
-                    <div className="shadow-box">
-                         <p><b>TOTAL: ${total}</b></p>
-                    </div>
-                </div>
-                }
             </div>
         </StyledProductsContainer>
     )

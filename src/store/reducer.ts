@@ -1,11 +1,11 @@
-import { ActionType, GlobalStateInterface } from './types';
+import { ActionType } from './types';
 
 const initialState = {
   interactions: [],
   carts: [],
 }
 
-const Reducer = (state: GlobalStateInterface, action: ActionType): any => {
+const Reducer = (state: any, action: ActionType): any => {
   switch (action.type) {
     case "SET_INTERACTIONS":
       return {

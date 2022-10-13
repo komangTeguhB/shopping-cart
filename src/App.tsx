@@ -7,14 +7,16 @@ import { GlobalStore } from "./store/GlobalStore";
 
 function App() {
   return (
-    <GlobalStore>
+   
       <BrowserRouter>
+       <GlobalStore>
         <div className="App">
-          <Navigation />
-          <Routers />
+          <Navigation>
+            <Routers />
+          </Navigation>
         </div>
+        </GlobalStore>
       </BrowserRouter>
-    </GlobalStore>
   );
 }
 
