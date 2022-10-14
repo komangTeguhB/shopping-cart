@@ -82,7 +82,7 @@ export default function Main() {
         <StyledContentContainer>
             <div className="top-filter-container">
                 <div className="input-filters">
-                    <input className="input-style" onKeyDown={(e) => handleOnKeypress(e)} onChange={(e) =>  setSearchText(e.target.value)} placeholder="Search movie"></input>
+                    <input className="input-style" onKeyDown={(e) => handleOnKeypress(e)} onChange={(e) =>  setSearchText(e.target.value)} placeholder="Search product"></input>
                     <button className="search-btn-style" onClick={() => searchProduct(searchText)}>Search</button>
                 </div>
             </div>
